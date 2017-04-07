@@ -1,0 +1,18 @@
+services:
+    app.manager:
+      class: AppBundle\Manager\AppManager
+      calls:
+        - [setEventDispatcher, ["@event_dispatcher"]]
+        - [setLogger, ["@logger"]]
+      arguments:
+        - '@doctrine.orm.entity_manager'
+      tags:
+          - { name: monolog.logger, channel: leads }
+    product.manager:
+      class: AppBundle\Manager\ProductManager
+      arguments:
+        - '@doctrine.orm.entity_manager'
+    category.manager:
+      class: AppBundle\Manager\CategoryManager
+      arguments:
+        - '@doctrine.orm.entity_manager'
