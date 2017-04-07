@@ -27,7 +27,7 @@ class DemoController extends FOSRestController
     public function cgetAction()
     {
       $time = $this->getParameter('api_base.entity_user_namespace');
-      return $time;
+      return $this->getUser();
     }
 
 }

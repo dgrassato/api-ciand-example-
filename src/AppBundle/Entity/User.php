@@ -2,21 +2,27 @@
 
 namespace AppBundle\Entity;
 
-use BaseBundle\Entity\EntityTrait;
+use BaseBundle\Entity\Traits\ArrayTrait;
+use BaseBundle\Entity\Traits\IdTrait;
+use BaseBundle\Entity\Traits\SoftDeleteTrait;
+use BaseBundle\Entity\Traits\TimestampTrait;
+use BaseBundle\Entity\Traits\UiidTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
-use BaseBundle\Entity\UserBase;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @Serializer\ExclusionPolicy("all")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class User implements UserInterface, \Serializable, EquatableInterface
 {
-    use EntityTrait;
+    use UiidTrait, ArrayTrait, TimestampTrait, SoftDeleteTrait;
 
     /**
      * @ORM\Column(type="string", unique=true)

@@ -1,9 +1,3 @@
-imports:
-    - { resource: cors.yml }
-    - { resource: jwt_atuh.yml }
-    - { resource: serializer.yml }
-    - { resource: security.yml }
-
 # FOS Rest
 fos_rest:
      format_listener:
