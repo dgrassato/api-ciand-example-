@@ -13,7 +13,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use JMS\Serializer\Annotation as Serializer;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\UserRepository")
  * @ORM\Table(name="user")
@@ -51,6 +50,11 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * @Serializer\Expose()
      */
     protected $roles = array();
+
+    public function hasRole($role)
+    {
+      return in_array(strtoupper($role), $this->getRoles(), true);
+    }
 
     public function getId()
     {

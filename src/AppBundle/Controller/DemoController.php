@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DemoController extends FOSRestController
 {
@@ -26,6 +27,10 @@ class DemoController extends FOSRestController
    */
     public function cgetAction()
     {
+//      if ($this->get('security.token_storage')->getToken()->getUser()->hasRole('ROLE_USER') === FALSE) {
+//        throw new AccessDeniedException();
+//      }
+
       $time = $this->getParameter('api_base.entity_user_namespace');
       return $this->getUser();
     }

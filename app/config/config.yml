@@ -8,12 +8,6 @@ imports:
 parameters:
     locale: en
     api_version: "v1"
-base:
-  entity_user_namespace: 'AppBundle\Entity\User'
-  authentication:
-    enabled: true
-    method: "jwt"
-    time_expiration: 3600000
 
 framework:
     ide: 'phpstorm://open?file=%%f&line=%%l'

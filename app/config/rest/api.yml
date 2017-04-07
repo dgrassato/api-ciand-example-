@@ -5,9 +5,26 @@ imports:
     - { resource: security.yml }
     - { resource: rest.yml }
 
+
+fos_oauth_server:
+    db_driver: orm
+    client_class:        AppBundle\Entity\Oauth2\Client
+    access_token_class:  AppBundle\Entity\Oauth2\AccessToken
+    refresh_token_class: AppBundle\Entity\Oauth2\RefreshToken
+    auth_code_class:     AppBundle\Entity\Oauth2\AuthCode
+    service:
+        user_provider: platform.user.provider
+        options:
+            supported_scopes: user celular android ios
+            # Changing tokens and authcode lifetime
+            access_token_lifetime: 3600000
+            #refresh_token_lifetime: 1209600
+            #auth_code_lifetime: 30
+
+
 base:
   entity_user_namespace: 'AppBundle\Entity\User'
   authentication:
     enabled: true
-    method: "jwt"
+    method: "oauth2"
     time_expiration: 3600000
