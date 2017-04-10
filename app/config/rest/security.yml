@@ -26,37 +26,37 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        oauth_token:
-            pattern:    ^/oauth/v2/token
-            security:   false
+#        oauth_token:
+#            pattern:    ^/oauth/v2/token
+#            security:   false
 
 #        oauth_authorize:
 #            pattern:    ^/oauth/v2/auth
             # Add your favorite authentication process here
 
-#        api_login:
-#            pattern:  ^/api/token/login
-#            stateless: true
-#            anonymous: true
-#        refresh:
-#            pattern:  ^/api/token/refresh
-#            stateless: true
-#            anonymous: true
+        api_login:
+            pattern:  ^/api/token/login
+            stateless: true
+            anonymous: true
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            anonymous: true
 
         api:
             pattern:   ^/api
-            fos_oauth:  true
+#            fos_oauth:  true
             stateless:  true
             anonymous:  false # can be omitted as its default value
-#            guard:
-#                authenticators:
-#                    - lexik_jwt_authentication.jwt_token_authenticator #jwt_token_authenticator
+            guard:
+                authenticators:
+                    - lexik_jwt_authentication.jwt_token_authenticator #jwt_token_authenticator
 
     access_control:
         # this is a catch-all for the admin area
         # additional security lives in the controllers
-#        - { path: ^/api/token/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
        # - { path: ^/oauth/v2/auth_login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/api,       roles: ROLE_USER }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

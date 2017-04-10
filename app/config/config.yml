@@ -8,6 +8,7 @@ imports:
 parameters:
     locale: en
     api_version: "v1"
+    #fos_oauth_server.server.class: "BaseBundle\Security\Authentication\OAuth2Ciandt"
 
 framework:
     ide: 'phpstorm://open?file=%%f&line=%%l'

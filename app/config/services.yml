@@ -20,3 +20,8 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    api_auth_server.jwt.event.authentication_success_listener:
+            class: BaseBundle\Security\Authentication\AuthenticationSuccessListener
+            tags:
+                - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }

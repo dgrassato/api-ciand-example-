@@ -24,3 +24,9 @@ services:
     platform.user.provider:
         class: %platform.user.provider.class%
         arguments: ['@doctrine.orm.entity_manager']
+
+    # Fix return access token with entity User
+    fos_oauth_server.server:
+        class: BaseBundle\Security\Authentication\OAuth2Ciandt
+        arguments: ['@fos_oauth_server.storage', %fos_oauth_server.server.options%]
+
