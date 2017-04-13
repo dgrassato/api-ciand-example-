@@ -9,8 +9,9 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use AppBundle\Entity\User;
+use BaseBundle\Entity\Repository\AbstractRepository;
 
-class UserRepository extends EntityRepository implements UserLoaderInterface, UserProviderInterface
+class UserRepository extends AbstractRepository implements UserLoaderInterface, UserProviderInterface
 {
     /**
      * @param $username

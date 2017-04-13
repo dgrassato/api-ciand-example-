@@ -1,0 +1,8 @@
+# src/AppBundle\Entity\Post/post.yml
+AppBundle\Entity\Post:
+    post_{1..50}:
+        title: <name()> <firstName()>
+        slug: <slug()>
+        content: <realText(50,2)>
+        updatedAt: <dateTime()>
+        createdAt: <dateTime()>

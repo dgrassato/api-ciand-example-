@@ -27,6 +27,31 @@ services:
 
     # Fix return access token with entity User
     fos_oauth_server.server:
-        class: BaseBundle\Security\Authentication\OAuth2Ciandt
+        class: BaseBundle\Security\Authentication\OAuth2\OAuth2Server
         arguments: ['@fos_oauth_server.storage', %fos_oauth_server.server.options%]
+
+    api_base.exception_subscriber:
+        class: BaseBundle\EventListener\ApiExceptionSubscriber
+        arguments: ['%kernel.debug%', '@logger']
+        tags:
+            - { name: kernel.event_subscriber }
+ #### Transformadores do Fractal
+    appbundle.controller.appbundle.entity.transformer.posttransformer:
+        class: AppBundle\Entity\Transformer\PostTransformer
+        parent: api_base.transformer.abstract
+        calls:
+            - [setCommentTransformer, ["@app_api.transformer.comment"]]
+            - [setTestTransformer, ["@app_api.transformer.test"]]
+
+
+    app_api.transformer.comment:
+        class: AppBundle\Entity\Transformer\CommentTransformer
+        parent: api_base.transformer.abstract
+
+    app_api.transformer.test:
+        class: AppBundle\Entity\Transformer\TestTransformer
+        parent: api_base.transformer.abstract
+
+
+
 

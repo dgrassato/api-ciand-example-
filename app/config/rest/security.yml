@@ -26,9 +26,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-#        oauth_token:
-#            pattern:    ^/oauth/v2/token
-#            security:   false
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
 
 #        oauth_authorize:
 #            pattern:    ^/oauth/v2/auth
@@ -45,12 +45,12 @@ security:
 
         api:
             pattern:   ^/api
-#            fos_oauth:  true
+            fos_oauth:  true
             stateless:  true
             anonymous:  false # can be omitted as its default value
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator #jwt_token_authenticator
+#            guard:
+#                authenticators:
+#                    - lexik_jwt_authentication.jwt_token_authenticator #jwt_token_authenticator
 
     access_control:
         # this is a catch-all for the admin area
