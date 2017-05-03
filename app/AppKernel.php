@@ -38,6 +38,7 @@ class AppKernel extends Kernel
 
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             $bundles[] = new Hautelook\AliceBundle\HautelookAliceBundle();
+
         }
 
         return $bundles;

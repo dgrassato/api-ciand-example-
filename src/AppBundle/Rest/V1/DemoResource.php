@@ -1,35 +1,19 @@
 <?php
 
-namespace AppBundle\Controller;
+namespace AppBundle\Rest\V1;
 
 use AppBundle\Entity\Post;
-use AppBundle\Entity\Transformer\HipermediaSerializer;
-use BaseBundle\Transformer\CustomSerializer;
-use Doctrine\ORM\QueryBuilder;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Controller\Annotations as FOSRest;
-use FOS\RestBundle\Routing\ClassResourceInterface;
-use JMS\Serializer\SerializationContext;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use League\Fractal;
-use League\Fractal\Resource\Item;
-use League\Fractal\Resource\Collection;
-use Pagerfanta\Adapter\MongoAdapter;
-use Pagerfanta\Pagerfanta;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\RouterInterface;
-use League\Fractal\Pagination\PaginatorInterface;
+use BaseBundle\Controller\AbstractResource;
 use BaseBundle\Controller\FractalResponseTrait;
-use Pagerfanta\Adapter\DoctrineCollectionAdapter;
+use FOS\RestBundle\Controller\Annotations as FOSRest;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class DemoController
  * @package AppBundle\Controller
  */
-class DemoController extends FOSRestController
+class DemoResource extends AbstractResource
 {
 
     use FractalResponseTrait;
@@ -63,8 +47,8 @@ class DemoController extends FOSRestController
         $postsQb = $this->getDoctrine()->getRepository(Post::class)->paginate($request,false);
 
 
-        $postTransform = $this->get('appbundle.controller.appbundle.entity.transformer.posttransformer');
-
+        //$postTransform = $this->get('appbundle.controller.appbundle.entity.transformer.post');
+        $postTransform = $this->getDefaultTransformer();
 
        $comment = $this->response($post, $postTransform, ['comment','test']);
 
@@ -110,6 +94,27 @@ class DemoController extends FOSRestController
     }
 
 
+    /**
+     * This method should return default manager.
+     *
+     *
+     * @return ObjectManager
+     */
+    protected function getManager() {
+        // TODO: Implement getManager() method.
+    }
+
+    /**
+     * This method should return the entity.
+     *
+     *
+     * @return getEntiyClass
+     */
+    protected function getEntityClass()
+    {
+
+        return Post::class;
+    }
 
 }
 

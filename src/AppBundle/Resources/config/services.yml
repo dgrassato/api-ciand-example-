@@ -36,21 +36,33 @@ services:
         tags:
             - { name: kernel.event_subscriber }
  #### Transformadores do Fractal
-    appbundle.controller.appbundle.entity.transformer.posttransformer:
+    appbundle.transformer.post:
         class: AppBundle\Entity\Transformer\PostTransformer
         parent: api_base.transformer.abstract
         calls:
-            - [setCommentTransformer, ["@app_api.transformer.comment"]]
-            - [setTestTransformer, ["@app_api.transformer.test"]]
+            - [setCommentTransformer, ["@appbundle.transformer.comment"]]
+            - [setTestTransformer, ["@appbundle.transformer.test"]]
 
 
-    app_api.transformer.comment:
+    appbundle.transformer.comment:
         class: AppBundle\Entity\Transformer\CommentTransformer
         parent: api_base.transformer.abstract
 
-    app_api.transformer.test:
+    appbundle.transformer.test:
         class: AppBundle\Entity\Transformer\TestTransformer
         parent: api_base.transformer.abstract
+
+
+    # Services
+    post.manager:
+          class: AppBundle\Manager\PostManager
+          calls:
+            - [setEventDispatcher, ["@event_dispatcher"]]
+            - [setLogger, ["@logger"]]
+          arguments:
+            - '@doctrine.orm.entity_manager'
+          tags:
+              - { name: monolog.logger, channel: leads }
 
 
 

@@ -1,13 +1,15 @@
-app:
-    resource: "@AppBundle/Controller/"
+app_v1:
+    resource: "@AppBundle/Rest/V1"
     type: rest
-    prefix: /api/%api_version%/{_locale}
+    prefix: /api/{version}/{locale}
+    condition: "request.attributes.get('version') == 'v1'"
     defaults:
-        _locale: en
-        _format: json
+        locale: en
+        format: json
+        version: v1
     requirements:
-        _format: "json|xml"
-        _locale: "%locale_supported%"
+        format: "json|xml"
+        locale: "%locale_supported%"
 
 gesdinet_jwt_refresh_token:
     path:     /api/token/refresh

@@ -22,7 +22,9 @@ use BaseBundle\Entity\Traits\UiidTrait;
  */
 class Post
 {
-    use IdTrait, ArrayTrait, TimestampTrait, SoftDeleteTrait;
+    use IdTrait, TimestampTrait, SoftDeleteTrait;
+
+
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Not null")
@@ -74,7 +76,7 @@ class Post
 
     /**
      * @ORM\OneToMany(
-     *      targetEntity="Comment",
+     *      targetEntity="AppBundle\Entity\Comment",
      *      mappedBy="post",
      *      orphanRemoval=true,
      *      cascade={"persist"}
@@ -84,21 +86,30 @@ class Post
      */
     protected $comments;
 
-    public function __construct()
-    {
-        $this->comments = new ArrayCollection();
-    }
-
     /**
-     * @return mixed
+     * @ORM\ManyToMany(
+     *      targetEntity="AppBundle\Entity\Tag",
+     *      mappedBy="post",
+     *      orphanRemoval=true,
+     *      cascade={"persist"}
+     * )
+     * @Serializer\Groups({"post", "post-read"})
+     * @Serializer\Type("ArrayCollection<AppBundle\Entity\Tag>")
      */
-    public function getTitle()
-    {
-        return $this->title;
+    protected $tags;
+
+    public function __construct() {
+
+        $this->comments = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     /**
-     * @param mixed $title
+     * Set title
+     *
+     * @param string $title
+     *
+     * @return Post
      */
     public function setTitle($title)
     {
@@ -108,15 +119,45 @@ class Post
     }
 
     /**
-     * @return mixed
+     * Get title
+     *
+     * @return string
      */
-    public function getContent()
+    public function getTitle()
     {
-        return $this->content;
+        return $this->title;
     }
 
     /**
-     * @param mixed $content
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Post
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Post
      */
     public function setContent($content)
     {
@@ -126,7 +167,73 @@ class Post
     }
 
     /**
-     * @return mixed
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Post
+     */
+    public function addComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     *
+     * @return Post
+     */
+    public function addComments($comments)
+    {
+        foreach ($comments as $comment){
+
+            $this->addComment($comment);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param \AppBundle\Entity\Comment $comments
+     *
+     * @return Post
+     */
+    public function setComments($comments = null)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+    /**
+     * Remove comment
+     *
+     * @param \AppBundle\Entity\Comment $comment
+     */
+    public function removeComment(\AppBundle\Entity\Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {
@@ -134,30 +241,64 @@ class Post
     }
 
     /**
-     * @param mixed $comments
+     * Add tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     *
+     * @return Post
      */
-    public function setComments($comments)
+    public function addTag(\AppBundle\Entity\Tag $tag)
     {
-        $this->comments = $comments;
+        $this->tags[] = $tag;
 
         return $this;
     }
 
     /**
-     * @return mixed
+     * Add comment
+     *
+     * @param (\AppBundle\Entity\Tag $tags
+     *
+     * @return Post
      */
-    public function getSlug()
+    public function addTags($tags)
     {
-        return $this->slug;
+        foreach ($tags as $tag){
+
+            $this->addTag($tag);
+        }
+
+        return $this;
+    }
+    /**
+     * Remove tag
+     *
+     * @param \AppBundle\Entity\Tag $tag
+     */
+    public function removeTag(\AppBundle\Entity\Tag $tag)
+    {
+        $this->tags->removeElement($tag);
     }
 
     /**
-     * @param mixed $slug
-     * @return Post
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setSlug($slug)
+    public function getTags()
     {
-        $this->slug = $slug;
+        return $this->tags;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function setTags($tags = null)
+    {
+        $this->tags = $tags;
+
         return $this;
     }
 }
